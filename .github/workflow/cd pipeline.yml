@@ -1,4 +1,5 @@
-name : CICD Database Dev to Prod
+name: CICD Database Dev to Prod  
+
 on:
   push:
     branches:
@@ -9,14 +10,13 @@ jobs:
     name: Database CI/CD
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4 # Check out ke repository yang kita gunakan
-      - name: SSh Connect
-        uses: appleboy/ssh-action@v1 
-        withh:
+      - name: Checkout code
+        uses: actions/checkout@v4 #Checkout ke repository yang digunakan
+      - name: SSH Connect
+        uses: appleboy/scp-action@v1 #Digunakan untuk konek ke server melaui SSH
+        with:
           host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
+          username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
-            echo "Berhasil Connect ke Server"
-            
+            echo "Berhasil konek ke server"
