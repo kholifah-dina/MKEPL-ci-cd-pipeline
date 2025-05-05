@@ -1,0 +1,22 @@
+name : CICD Database Dev to Prod
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  db_cicd:
+    name: Database CI/CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # Check out ke repository yang kita gunakan
+      - name: Setup Connect
+        uses: appleboy/ssh-action@v1 
+        withh:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            echo "Berhasil Connect ke Server"
+            
