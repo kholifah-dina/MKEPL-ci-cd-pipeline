@@ -21,3 +21,9 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           script: |
             echo "Berhasil konek ke server"
+
+            cd/home/dina_cicd
+            echo "Berhasil masuk ke folder dina_cicd"
+            
+            docker compose up -d
+            echo "Berhasil Menjalankan Docker Compose"
