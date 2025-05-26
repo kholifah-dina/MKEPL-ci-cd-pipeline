@@ -27,7 +27,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build and analyze with SonarQube
-        working-directory: sample-ci-testing  # Masuk ke dalam folder sample-ci-testing
+        working-directory: sample-ci-testing 004 # Masuk ke dalam folder sample-ci-testing
         run: |
             mvn clean verify sonar:sonar \
             -Dsonar.projectKey=sample-ci-testing_004 \
