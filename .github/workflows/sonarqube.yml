@@ -5,39 +5,32 @@ on:
     branches:
       - main
 
-
 jobs:
-  build:
+  sonar:
     name: Anaylze code with SonarQube
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
-          java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
-      - name: Cache SonarQube packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
-        working-directory: sample-ci-testing  # <--- Ganti dengan folder tempat pom.xml kamu
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ http://202.43.248.139:9000 }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-              -Dsonar.projectKey=sample-ci-testing_004 \
-              -Dsonar.login=${SONAR_TOKEN} \
-              -Dsonar.host.url=${SONAR_HOST_URL}
+
+      - name: Build and analyze with SonarQube
+        working-directory: sample-ci-testing  # Masuk ke dalam folder sample-ci-testing
+        run: |
+            mvn clean verify sonar:sonar \
+            -Dsonar.projectKey=sample-ci-testing_004 \
+            -Dsonar.host.url=http://202.43.248.139:9000 \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
