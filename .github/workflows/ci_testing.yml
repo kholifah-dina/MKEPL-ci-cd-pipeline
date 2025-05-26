@@ -21,7 +21,7 @@ jobs:
           script: |
             echo "Berhasil Konek ke Server"
             echo "Masuk dulu ke Folder YIS"
-            cd /home/yis
+            cd /home/dina_cicd
             echo "Berhasil Masuk ke Folder YIS"
 
             echo "Mengecek apakah ini adalah git repository"
@@ -30,7 +30,7 @@ jobs:
               git pull origin main # Update repository ke branch main
             else
               echo "Gak ada git repository"
-              git clone https://github.com/yudhaislamisulistya/cicd_database_example .
+              git clone https://github.com/kholifah-dina/MKEPL-ci-cd-pipeline.git .
             fi
 
             echo "Berhasil Update Repository"
@@ -39,7 +39,7 @@ jobs:
             sudo apt-get install -y maven
             echo "Berhasil Install Maven"
 
-            cd /home/yis/sample-ci-testing
+            cd /home/dina_cicd
             echo "Berhasil Masuk ke Folder sample-ci-testing"
             echo "Mencoba untuk Test Maven"
             mvn clean test
